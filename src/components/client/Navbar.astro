@@ -9,7 +9,6 @@ import { Image } from 'astro:assets';
         <Image
             src="https://cts-sport.com//wp-content/uploads/2022/04/logo-web.png" 
             alt="Sports Website Logo"
-            class="rounded-3"
             width="1280"
             height="720"
             loading="eager"
@@ -44,3 +43,11 @@ import { Image } from 'astro:assets';
     </div>
   </div>
 </nav>
+<style>
+@media screen and (max-width: 768px) {
+  .navbar-brand img{
+    height: 45px !important;
+    width: 100% !important;
+  }
+}
+</style>
