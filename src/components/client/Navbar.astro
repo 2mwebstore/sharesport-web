@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets';
+---
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-fixed-top bg-nav-header">
+  <div class="container">
+    <div class="wrapper">
+      <!-- Logo with alt text -->
+      <a class="navbar-brand text-center mx-auto" href="/">
+        <Image
+            src="https://cts-sport.com//wp-content/uploads/2022/04/logo-web.png" 
+            alt="Sports Website Logo"
+            class="rounded-3"
+            width="1280"
+            height="720"
+            loading="eager"
+            decoding="async"
+          />
+      </a>
+
+      <!-- Toggler button is already accessible -->
+      <button
+        class="navbar-toggler btn-menu"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+
+    <div class="collapse navbar-collapse justify-content-start nav-mobile-none navbarNav" id="navbarNav">
+      <ul class="navbar-nav">
+        <!-- Text links are already accessible -->
+        <li class="nav-item">
+          <a class="nav-link" href="/news">ព័ត៌មាន</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/highlights">ហាយឡាយ</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,36 @@
+---
+import type { NewsItem } from "../../types/news";
+import { formatDateKhmer  } from "../../types/date";
+import { Image } from 'astro:assets';
+export interface Props {
+  item: NewsItem;
+}
+const { item } = Astro.props;
+---
+
+<article >
+  <div class="item" data-aos="zoom-in">
+  <a href={`/news/${item.id}`}>
+    <div class="item-wrapper card_1">
+      <div class="item-img" >
+      <Image
+        src={item.image}
+        alt={item.title}
+        width="1280"
+        height="720"
+        loading="eager"
+        decoding="async"
+      />
+       <slot /> 
+      </div>
+      <div class="card-box">
+        <div class=" display-time">{formatDateKhmer(item.created_at)}</div>
+        <h4 class=" display-5">{item.title}</h4>
+        <p class="display-4">
+         {item.detail}
+        </p>
+      </div>
+    </div>
+  </a>
+  </div>
+</article>

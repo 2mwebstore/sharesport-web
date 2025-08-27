@@ -1,0 +1,94 @@
+---
+import Layout from "../layouts/Layout.astro"
+import ArticleCard from "../components/client/ArticleCard.astro";
+import CardHighlights from "../components/client/CardHighlights.astro";
+import  DeepDivesCard  from '../components/client/DeepDivesCard.astro';
+import Popup from "../components/client/Popup.astro";
+import type { NewsItem } from "../types/news";
+import type { HighlightsItem } from "../types/highlights";
+
+// const apiUrl = "https://wwb99-golang-production.up.railway.app/api/news_home";
+
+const ApiUrl = import.meta.env.API_ORIGIN;
+
+// Fetch news server-side
+let news: NewsItem[] = [];
+let highlights: HighlightsItem[] = [];
+try {
+  const resNews = await fetch(`${ApiUrl}/api/news_home`, { cache: "no-store" });
+  if (resNews.ok) {
+    news = (await resNews.json()) as NewsItem[];
+  } else {
+    console.error(`News API returned HTTP ${resNews.status}`);
+  }
+} catch (err) {
+  console.error("Fetch news failed:", err);
+}
+
+try {
+  const resHighlights = await fetch(`${ApiUrl}/api/highlights_home`, { cache: "no-store" });
+  if (resHighlights.ok) {
+    highlights = (await resHighlights.json()) as HighlightsItem[];
+    
+  } else {
+    console.error(`Highlights API returned HTTP ${resHighlights.status}`);
+  }
+} catch (err) {
+  console.error("Fetch highlights failed:", err);
+}
+// Take first news for SEO, or a default fallback
+const firstNews = news.length > 0 ? {
+  title: news[0].title,
+  detail: news[0].detail ?? news[0].description ?? "អានព័ត៌មានកីឡាចុងក្រោយពី CTS Sport។",
+  image: news[0].image,
+  slug: news[0].slug,
+} : {
+  title: "CTS Sport - ផ្តល់ព័ត៌មានកីឡាបច្ចុប្បន្នភាពថ្មីៗ",
+  detail: "អានព័ត៌មានកីឡាចុងក្រោយ បាល់ទាត់ បាល់បោះ និងព័ត៌មានកីឡាដទៃទៀត ពី CTS Sport។",
+  image: "https://cts-sport.com/wp-content/uploads/2022/04/logo-web.png",
+  slug: "home",
+};
+
+const canonical = new URL("/", Astro.site).toString();
+---
+<Layout
+  title={firstNews.title}
+  description={firstNews.detail}
+  url={canonical}
+  image={firstNews.image}
+>
+<!-- <Popup /> -->
+<section class="LatestNews">
+  <DeepDivesCard news={news} />
+</section>
+<section class="ArticleCard">
+  <div class="container px-4 py-4">
+    <h1 class="text-3xl text-white" data-aos="fade-right">ព័ត៌មានក្តៅៗ</h1>
+    {news.length > 0 ? (
+        <div class="news-grid-container">
+        {news.slice(4).map((n: NewsItem) => (
+          <ArticleCard item={n} />
+          ))}
+      </div>
+    ) : (
+      <p class="text-center text-gray-500">
+        No news available — please check the API or try again later.
+      </p>
+    )}
+    <div class="d-flex justify-content-end pt-2">
+      <button class="genz-button"  data-aos="zoom-in-down">មើលច្រើនទៀត<span class="icon">&rarr;</span></button>
+    </div>
+  </div>
+</section>
+<section class="CardHighlights">
+  <div class="container px-4 py-4">
+    <h1 class="text-3xl text-white" data-aos="fade-right">ហាយឡាយ</h1>
+      {highlights.map((n: HighlightsItem) => (
+        <CardHighlights item={n} />
+      ))}
+      <div class="d-flex justify-content-end pt-2">
+      <button class="genz-button" data-aos="zoom-in-down">មើលច្រើនទៀត<span class="icon">&rarr;</span></button>
+    </div>
+  </div>
+</section>
+</Layout>

@@ -1,0 +1,49 @@
+---
+import SEO from "../components/SEO.astro";
+import Navbar from "../components/client/Navbar.astro";
+import Footer from "../components/client/Footer.astro";
+import AOSInit from '../components/client/AOSInit.vue';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "../styles/global.css";
+interface Props {
+  title: string;
+  description?: string;
+  url?: string;
+  image?: string;
+}
+const head = {
+  siteName: "CTS Sport - ផ្តល់ព័ត៌មានកីឡាបច្ចុប្បន្នភាពថ្មីៗ",
+  type: "website",
+  icon32px : "https://cts-sport.com//wp-content/uploads/2022/04/cropped-02-32x32.png",
+  icon192px : "https://cts-sport.com//wp-content/uploads/2022/04/cropped-02-192x192.png",
+  touch180px : "https://cts-sport.com//wp-content/uploads/2022/04/cropped-02-180x180.png",
+};
+
+const { title, description, url, image } = Astro.props as Props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="keywords" content="cts-sport, online news, sport, life & social, news, sport news"> 
+
+    <link rel="icon" href={head.icon32px} sizes="32x32" />
+    <link rel="icon" href={head.icon192px} sizes="192x192" />
+    <link rel="apple-touch-icon" href={head.touch180px} /> 
+  
+    <SEO title={title} description={description} url={url} image={image} type={head.type} siteName={head.siteName} />
+  </head>
+  <body>
+    <AOSInit client:load /> 
+    <header>
+      <Navbar />
+    </header>
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <script type="module" src="/src/scripts/bootstrap.js"></script>
+  </body>
+</html>

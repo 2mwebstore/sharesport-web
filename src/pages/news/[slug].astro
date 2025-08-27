@@ -1,0 +1,125 @@
+---
+import SEO from '../../components/SEO.astro';
+import ShareButtons from '../../components/ShareButtons.astro';
+import Navbar from "../../components/client/Navbar.astro";
+import Footer from "../../components/client/Footer.astro";
+import { Image } from 'astro:assets';
+import type { NewsItem } from "../../types/news";
+import { formatDateKhmer  } from "../../types/date";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "../../styles/global.css";
+
+const ApiUrl = import.meta.env.API_ORIGIN;
+const { params } = Astro;
+// Assuming the slug is the news ID
+const newsId = params.slug;
+
+// Fetch single news detail
+let item: NewsItem | null = null;
+
+try {
+  const res = await fetch(`${ApiUrl}/api/news/getbyid?id=${newsId}`, { cache: 'no-store' });
+  if (res.ok) {
+    const json = await res.json();
+    item = json.data; // <-- extract the 'data' field from API response
+    console.log(item);
+    
+  } else {
+    console.error(`API returned HTTP ${res.status}`);
+  }
+} catch (err) {
+  console.error('Fetch failed:', err);
+}
+
+// Fallback if not found
+if (!item) {
+  throw new Error('Not found');
+}
+
+const url = new URL(`/news/${item.slug ?? item.id}`, Astro.site).toString();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <SEO
+      title={`CTS SPORT | ${item.title} `}
+      description={item.detail ?? item.title ?? ''}
+      url={url}
+      image={item.image}
+      type="article"
+      siteName="CTS SPORT"
+      locale="en_US"
+      publishedTime={item.created_at}
+      modifiedTime={item.created_at}
+      section={item.created_by}
+      tags={["Sports","Live Score","Highlights","CTS Sport"]}
+      jsonLd={{
+        articleBody: item.detail ?? '',
+      }}
+    />
+  </head>
+  <body>
+    <header>
+      <Navbar />
+    </header>
+    <main>
+      <div class="LatestNews">
+        <div class="container px-4 py-4">
+          <article>
+            <h1 class="text-title">
+              {item.title}
+            </h1>
+            <div class="text-date">
+              {formatDateKhmer(item.created_at)}
+            </div>
+
+              {item.image && (
+               <Image
+                src={item.image}
+                alt={item.title}
+                width="1280"
+                height="720"
+                loading="eager"
+                decoding="async"
+                class="type-image"
+              />
+            )}
+            <p class="text-detail">{item.description ?? item.detail ?? ''}</p>
+            <ShareButtons title={item.title} url={url} />
+          </article>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <Footer />
+    </footer>
+    <script type="module" src="/src/scripts/bootstrap.js"></script>
+    <style>
+      
+      .text-title{
+        color: white;
+        font-size: 1.5rem;
+        line-height: 1.5;
+      }
+      .text-date{
+        color: #6366f1;
+        font-size: 1rem;
+      }
+      .text-detail{
+        padding-top: 10px;
+        color: white;
+        font-size: 1.3rem;
+        line-height: 1.4;
+      }
+      .type-image{
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+      }
+    </style>
+  </body>
+</html>

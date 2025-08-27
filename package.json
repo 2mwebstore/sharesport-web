@@ -1,0 +1,31 @@
+{
+  "name": "tasty-trappist",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "start": "astro preview --port $PORT"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.4.2",
+    "@astrojs/vue": "^5.1.0",
+    "aos": "^2.3.4",
+    "astro": "^5.13.2",
+    "bootstrap": "^5.3.7",
+    "bootstrap-icons": "^1.13.1",
+    "embla-carousel-vue": "^8.6.0",
+    "lucide-vue-next": "^0.541.0",
+    "ulid": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.20.8"
+  },
+  "devDependencies": {
+    "@types/aos": "^3.0.7",
+    "sass": "^1.90.0"
+  }
+}

@@ -1,0 +1,66 @@
+---
+// Props
+const { news = [] } = Astro.props;
+import { Image } from 'astro:assets';
+---
+
+<style lang="css">
+  @import './DeepDivesCard.css';
+</style>
+
+<div class="container">
+  <div class="deep-dives-card">
+    <div class="deep-dives-header">
+      <h2 class="deep-dives-label">ព័ត៌មានពេលព្រឹក</h2>
+      <div class="deep-dives-navigation">
+        <button id="prev" class="nav-arrow">&lt;</button>
+        <button id="next" class="nav-arrow">&gt;</button>
+      </div>
+    </div>
+
+    <div class="deep-dives-slider embla" id="embla">
+      <div class="embla__container deep-dives-slider-inner">
+        {news.slice(0, 4).map((row) => (
+          <div class="deep-dives-content embla__slide">
+            <div class="text-content">
+              <h2 class="deep-dives-title">{row.title}</h2>
+              <p class="deep-dives-description">{row.detail}</p>
+              <div class="deep-dives-tags">
+                <a href={`/news/${row.slug ?? row.id}`}>
+                  <span class="deep-dives-tag">មើលច្រើនទៀត→</span>
+                </a>
+              </div>
+            </div>
+            <div class="deep-dives-image-container">
+                <Image
+                    src={row.image}
+                    alt={row.title}
+                    width="1280"
+                    height="720"
+                    loading="eager"
+                    decoding="async"
+                    class="deep-dives-image"
+                />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Client-side script to initialize Embla -->
+<script>
+  import EmblaCarousel from 'embla-carousel';
+
+  const emblaNode = document.getElementById('embla');
+  if (emblaNode) {
+    const embla = EmblaCarousel(emblaNode, { loop: true });
+
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+
+    prevBtn.addEventListener('click', () => embla.scrollPrev());
+    nextBtn.addEventListener('click', () => embla.scrollNext());
+  }
+</script>

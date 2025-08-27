@@ -1,0 +1,35 @@
+---
+interface Props { title: string; url: string; }
+const { title, url } = Astro.props as Props;
+const fb = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+const tg = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+---
+<div style="display:flex; gap:.5rem; align-items:center;" class="footer-social">
+    <a href={fb} rel="noopener" target="_blank"   aria-label="facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M22 12c0-5.522-4.477-10-10-10S2 6.478 2 12c0 5 3.657 9.127 8.438 9.878v-6.988h-2.54v-2.89h2.54V9.845c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562v1.875h2.773l-.443 2.89h-2.33v6.988C18.343 21.127 22 17 22 12z"/>
+        </svg>
+    </a>
+    <a href={tg} rel="noopener" target="_blank"  aria-label="telegram">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 6.628 5.373 12 12 12 6.627 0 12-5.372 12-12 0-6.627-5.373-12-12-12zm5.434 8.803l-1.622 7.674c-.122.546-.44.681-.892.425l-2.47-1.822-1.189 1.146c-.132.132-.243.243-.496.243l.177-2.506 4.56-4.127c.198-.177-.043-.276-.308-.099l-5.63 3.537-2.42-.756c-.524-.165-.534-.524.11-.77l9.46-3.65c.438-.165.824.099.682.77z"/>
+        </svg>
+    </a>
+</div>
+<style>
+    .footer-social a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #131323;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        color: #fff;
+        transition: transform 0.3s, background 0.3s;
+    }
+    .footer-social a:hover {
+        transform: scale(1.1);
+        background: #5b214d;
+    }
+</style>

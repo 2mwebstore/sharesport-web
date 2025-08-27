@@ -1,0 +1,104 @@
+---
+/* Popup.astro */
+---
+
+<style>
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(19, 19, 35, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+  }
+
+  .popup-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .popup-box {
+    background: #ffffff;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  }
+
+  .popup-box img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  /* Countdown/close button */
+  .countdown {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    background: #f1f1f1;
+    padding: 3px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .countdown:hover {
+    background: #ddd;
+  }
+</style>
+
+<div id="popup" class="popup-overlay">
+  <div class="popup-box" onclick="event.stopPropagation()"> <!-- stop close when clicking box -->
+    <span id="countdown" class="countdown"></span>
+    <img src="https://cts-sport.com//wp-content/uploads/2024/10/att.J4QSVetkrKf0oxhnIa2qPEIQGq1bQnXbZpCgjsNqNRI.jpg" alt="Popup Ad" />
+  </div>
+</div>
+
+<script>
+  function showPopup() {
+    const popup = document.getElementById('popup');
+    const countdownEl = document.getElementById('countdown');
+    let timeLeft = 5; // seconds
+
+    popup.classList.add('active');
+    countdownEl.textContent = `Close in ${timeLeft}s`;
+
+    const timer = setInterval(() => {
+      timeLeft--;
+      if (timeLeft > 0) {
+        countdownEl.textContent = `Close in ${timeLeft}s`;
+      } else {
+        clearInterval(timer);
+        popup.classList.remove('active');
+      }
+    }, 1000);
+
+    // Manual close via countdown click
+    countdownEl.addEventListener('click', () => {
+      clearInterval(timer);
+      popup.classList.remove('active');
+    });
+
+    // Manual close via backdrop click
+    popup.addEventListener('click', () => {
+      clearInterval(timer);
+      popup.classList.remove('active');
+    });
+  }
+
+  window.addEventListener('load', () => {
+    showPopup();
+  });
+</script>
