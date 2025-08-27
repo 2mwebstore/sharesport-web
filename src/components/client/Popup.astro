@@ -1,5 +1,6 @@
 ---
 /* Popup.astro */
+import { Image } from 'astro:assets';
 ---
 
 <style>
@@ -63,7 +64,14 @@
   <div id="popup" class="popup-overlay">
     <div class="popup-box" onclick="event.stopPropagation()"> <!-- stop close when clicking box -->
       <span id="countdown" class="countdown"></span>
-      <img src="https://cts-sport.com//wp-content/uploads/2024/10/att.J4QSVetkrKf0oxhnIa2qPEIQGq1bQnXbZpCgjsNqNRI.jpg" alt="Popup Ad" />
+        <Image
+        src="https://cts-sport.com//wp-content/uploads/2024/10/att.J4QSVetkrKf0oxhnIa2qPEIQGq1bQnXbZpCgjsNqNRI.jpg"
+        width="500"
+        height="300"
+        alt="cts-sport"
+        loading="eager"
+        decoding="async"
+      />
     </div>
   </div>
 </div>
