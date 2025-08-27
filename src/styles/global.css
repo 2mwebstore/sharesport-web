@@ -1,11 +1,17 @@
 /* khmer */
-/* khmer */
 @font-face {
   font-family: 'Koulen';
   font-style: normal;
   font-weight: 400;
   src: url(https://fonts.gstatic.com/s/koulen/v29/AMOQz46as3KIBPemjno8ouY.woff2) format('woff2');
-  unicode-range: U+1780-17FF, U+19E0-19FF, U+200C-200D, U+25CC;
+  unicode-range: U+1780-17FF, U+19E0-U+19FF, U+200C-200D, U+25CC;
+}
+@font-face {
+  font-family: 'Dangrek';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/Dangrek.ttf') format('ttf');
+  unicode-range: U+1780-17FF, U+19E0-U+19FF, U+200C-200D, U+25CC;
 }
 /* latin */
 @font-face {
@@ -15,17 +21,16 @@
   src: url(https://fonts.gstatic.com/s/koulen/v29/AMOQz46as3KIBPemhXo8.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-
 @font-face {
-  font-family: 'Dangrek';
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: url('/fonts/Dangrek.ttf') format('ttf');
-  unicode-range: U+1780-17FF, U+19E0-19FF, U+200C-200D, U+25CC;
+  src: url('/fonts/Roboto.ttf') format('ttf');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-/* khmer */
+/* latin */
 body{
-    font-family: Dangrek;
+    font-family: Dangrek,Roboto;
 }
 nav .navbar-nav .nav-link,main h1{
   font-family: Koulen;
@@ -174,6 +179,7 @@ main{
         color: #fff;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         transition: all 0.3s ease;
+        border-color: transparent;
     }
     .genz-button:hover {
         transform: translateY(-3px) scale(1.05);
