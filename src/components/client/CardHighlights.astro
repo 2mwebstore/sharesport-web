@@ -97,7 +97,7 @@ const { item } = Astro.props;
 }
 
 .datetime {
-  font-size: 12px;
+  font-size: 14px;
   color: #6366f1;
 }
 
@@ -112,7 +112,7 @@ const { item } = Astro.props;
 }
 
 .description {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.7;
   margin-bottom: 0;
   color: #959595;
@@ -124,6 +124,9 @@ const { item } = Astro.props;
 }
 
 @media (max-width: 768px) {
+  .card-content {
+    text-align: left;
+  }
   .card-highlights {
     grid-template-columns: 1fr;
     text-align: center;
