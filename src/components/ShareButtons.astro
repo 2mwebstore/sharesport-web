@@ -1,15 +1,8 @@
 ---
 interface Props { title: string; url: string; }
 const { title, url } = Astro.props as Props;
-const cleanTitle = title
-  .toString()
-  .normalize('NFD')                       // Decompose Unicode characters
-  .replace(/[\u0300-\u036f]/g, '')       // Remove diacritics
-  .replace(/[^a-zA-Z0-9\u1780-\u17FF\u19E0-\u19FF\s]/g, '') // Keep Khmer, English, numbers, spaces
-  .trim();
-const encodedTitle = encodeURIComponent(cleanTitle).replace(/%20/g, '+');
 const fb = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-const tg = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(encodedTitle)}`;
+const tg = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
 ---
 <div style="display:flex; gap:.5rem; align-items:center;" class="footer-social">
     <a href={fb} rel="noopener" target="_blank"   aria-label="facebook">
