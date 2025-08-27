@@ -44,6 +44,8 @@ const { title, description, url, image } = Astro.props as Props;
       <slot />
     </main>
     <Footer />
-    <script type="module" src="/src/scripts/bootstrap.js"></script>
+    <script>
+      import "bootstrap/dist/js/bootstrap.bundle.min.js";
+    </script>
   </body>
 </html>

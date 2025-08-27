@@ -10,7 +10,7 @@
   font-family: 'Dangrek';
   font-style: normal;
   font-weight: 400;
-  src: url('/src/assets/fonts/Koulen.woff2') format('woff2');
+  src: url('/fonts/Dangrek.ttf') format('ttf');
   unicode-range: U+1780-17FF, U+19E0-19FF, U+200C-200D, U+25CC;
 }
 /* khmer */

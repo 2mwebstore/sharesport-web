@@ -97,7 +97,9 @@ const url = new URL(`/news/${item.slug ?? item.id}`, Astro.site).toString();
     <footer>
       <Footer />
     </footer>
-    <script type="module" src="/src/scripts/bootstrap.js"></script>
+    <script>
+      import "bootstrap/dist/js/bootstrap.bundle.min.js";
+    </script>
     <style>
       
       .text-title{
