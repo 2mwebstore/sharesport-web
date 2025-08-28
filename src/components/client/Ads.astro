@@ -1,0 +1,73 @@
+---
+import "swiper/css";
+import "swiper/css/effect-cube";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
+import { Image } from 'astro:assets';
+// API Base URL
+const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL || "http://localhost:8080";
+let sponsors: Array<{ id: number; name: string; image_url: string }> = [];
+
+try {
+  const res = await fetch(`${apiBaseUrl}/api/sponsors_home`);
+  const json = await res.json();
+  if (json?.data) sponsors = json.data;
+} catch (err) {
+  console.error("Failed to load sponsors:", err);
+}
+---
+
+<div class="swiper ads-swiper">
+  <div class="swiper-wrapper">
+    {sponsors.map((item) => (
+      <div class="swiper-slide">
+        <Image
+            src={item.image_url}
+            alt={item.name}
+            width="300"
+            height="300"
+            loading="eager"
+            decoding="async"
+            class="image-wrapper"
+        />
+      </div>
+    ))}
+  </div>
+</div>
+
+<script >
+  import Swiper from "swiper";
+  import { EffectCube, Pagination, Autoplay } from "swiper/modules";
+
+  new Swiper(".ads-swiper", {
+   effect: 'cube',
+    grabCursor: true,
+    loop: true,
+    speed: 1000,
+    mousewheel: true,
+    direction: 'horizontal',
+    cubeEffect: {
+      shadow: false,
+      slideShadows: false,
+      shadowOffset: 20,
+      shadowScale: 0.94,
+    },
+    autoplay: { delay: 2500, disableOnInteraction: false },
+    modules: [EffectCube, Pagination, Autoplay],
+  });
+</script>
+
+<style>
+.ads-swiper {
+  max-width: 300px;
+  max-height: 300px;
+  width: 100%;
+}
+
+.ads-swiper img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+</style>

@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+const currentPath = Astro.url.pathname;
 ---
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-fixed-top bg-nav-header">
   <div class="container">
@@ -34,10 +35,10 @@ import { Image } from 'astro:assets';
       <ul class="navbar-nav">
         <!-- Text links are already accessible -->
         <li class="nav-item">
-          <a class="nav-link" href="/news">ព័ត៌មាន</a>
+          <a href="/news" class={`nav-link ${currentPath === '/news' ? 'active' : ''}`}>ព័ត៌មាន</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/highlights">ហាយឡាយ</a>
+          <a href="/highlights" class={`nav-link ${currentPath === '/highlights' ? 'active' : ''}`}>ហាយឡាយ</a>
         </li>
       </ul>
     </div>

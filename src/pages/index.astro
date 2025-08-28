@@ -39,7 +39,7 @@ try {
 // Take first news for SEO, or a default fallback
 const firstNews = news.length > 0 ? {
   title: news[0].title,
-  detail: news[0].detail ?? news[0].description ?? "អានព័ត៌មានកីឡាចុងក្រោយពី CTS Sport។",
+  detail: news[0].detail,
   image: news[0].image,
   slug: news[0].slug,
 } : {
@@ -62,7 +62,7 @@ const canonical = new URL("/", Astro.site).toString();
   <DeepDivesCard news={news} />
 </section>
 <section class="ArticleCard">
-  <div class="container px-4 py-4">
+  <div class="container px-2 py-2">
     <h1 class="text-3xl text-white" data-aos="fade-right">ព័ត៌មានក្តៅៗ</h1>
     {news.length > 0 ? (
         <div class="news-grid-container">
@@ -78,6 +78,11 @@ const canonical = new URL("/", Astro.site).toString();
     <div class="d-flex justify-content-end pt-2">
       <button class="genz-button"  data-aos="zoom-in-down">មើលច្រើនទៀត<span class="icon">&rarr;</span></button>
     </div>
+  </div>
+</section>
+<section class="ArticleCard">
+  <div class="container">
+      <img src="https://www.fan388.com/_nuxt/BANNER.OKOog9Qw.png" alt="CTS SPORT"  width="100%"/>
   </div>
 </section>
 <section class="CardHighlights">

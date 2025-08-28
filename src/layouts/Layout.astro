@@ -6,6 +6,7 @@ import AOSInit from '../components/client/AOSInit.vue';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../styles/global.css";
+import FooterMobile from "../components/client/FooterMobile.astro";
 interface Props {
   title: string;
   description?: string;
@@ -32,7 +33,9 @@ const { title, description, url, image } = Astro.props as Props;
     <link rel="icon" href={head.icon32px} sizes="32x32" />
     <link rel="icon" href={head.icon192px} sizes="192x192" />
     <link rel="apple-touch-icon" href={head.touch180px} /> 
-  
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dangrek&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
     <SEO title={title} description={description} url={url} image={image} type={head.type} siteName={head.siteName} />
   </head>
   <body>
@@ -44,6 +47,7 @@ const { title, description, url, image } = Astro.props as Props;
       <slot />
     </main>
     <Footer />
+    <FooterMobile />
     <script>
       import "bootstrap/dist/js/bootstrap.bundle.min.js";
     </script>

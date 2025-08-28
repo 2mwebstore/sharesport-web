@@ -93,6 +93,7 @@
 }
 
 .deep-dives-description {
+  font-style: italic;
   font-size: 0.8rem;
   line-height: 1.6;
   max-width: 500px;

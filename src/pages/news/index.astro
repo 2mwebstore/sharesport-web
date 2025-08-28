@@ -1,0 +1,60 @@
+---
+import Ads from "../../components/client/Ads.astro";
+import CardNews from "../../components/client/CardNews.astro";
+import Layout from "../../layouts/Layout.astro"
+import type { NewsItem } from "../../types/news";
+import Pagination from "../../components/Pagination.astro";
+const ApiUrl = import.meta.env.API_ORIGIN;
+// Get query params for pagination
+const urlSearchParams = new URLSearchParams(Astro.request.url.split("?")[1]);
+const page = parseInt(urlSearchParams.get("page") ?? "1", 10);
+const limit = parseInt(urlSearchParams.get("limit") ?? "5", 10);
+// Fetch news server-side
+let news: NewsItem[] = [];
+let totalItems = 0;
+let totalPages = 0;
+try {
+  const res = await fetch(`${ApiUrl}/api/news_home_client?page=${page}&limit=${limit}`, { cache: "no-store" });
+  if (res.ok) {
+    const json = await res.json();
+    news = json.data as NewsItem[];
+    totalItems = json.total ?? 0; // Make sure your API returns total count
+    totalPages = json.totalPages ?? 0;
+  } else {
+    console.error(`News API returned HTTP ${res.status}`);
+  }
+} catch (err) {
+  console.error("Fetch news failed:", err);
+}
+const firstNews = news.length > 0 ? {
+  title: news[0].title,
+  detail: news[0].detail ?? news[0].description ?? "អានព័ត៌មានកីឡាចុងក្រោយពី CTS Sport។",
+  image: news[0].image,
+} : {
+  title: "CTS Sport - ផ្តល់ព័ត៌មានកីឡាបច្ចុប្បន្នភាពថ្មីៗ",
+  detail: "អានព័ត៌មានកីឡាចុងក្រោយ បាល់ទាត់ បាល់បោះ និងព័ត៌មានកីឡាដទៃទៀត ពី CTS Sport។",
+  image: "https://cts-sport.com/wp-content/uploads/2022/04/logo-web.png",
+};
+const canonical = new URL("/news", Astro.site).toString();
+---
+<Layout title={firstNews.title} description={firstNews.detail} url={canonical} image={firstNews.image}>
+  <section class="LatestNews">
+    <div class="container px-2 py-2">
+      <img src="https://www.fan388.com/_nuxt/BANNER.OKOog9Qw.png" alt="CTS SPORT" width="100%" />
+      <h1 class="text-3xl font-bold text-white">ហាយឡាយ</h1>
+
+      <div class="content-grid">
+        <div>
+          {news.map((item: NewsItem) => (
+            <CardNews item={item} />
+          ))}
+          <!-- Pagination -->
+           <Pagination page={page} totalPages={totalPages} limit={limit} baseUrl="/news" />
+        </div>
+        <div class="ads-wrapper">
+          <Ads />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

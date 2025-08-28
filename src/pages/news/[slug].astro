@@ -3,6 +3,7 @@ import SEO from '../../components/SEO.astro';
 import ShareButtons from '../../components/ShareButtons.astro';
 import Navbar from "../../components/client/Navbar.astro";
 import Footer from "../../components/client/Footer.astro";
+import Ads from "../../components/client/Ads.astro";
 import { Image } from 'astro:assets';
 import type { NewsItem } from "../../types/news";
 import { formatDateKhmer  } from "../../types/date";
@@ -77,28 +78,36 @@ const head = {
     </header>
     <main>
       <div class="LatestNews">
-        <div class="container px-4 py-4">
+        <div class="container px-2 py-2">
           <article>
             <h1 class="text-title">
               {item.title}
             </h1>
-            <div class="text-date">
-              {formatDateKhmer(item.created_at)}
+            <div class="content-grid">
+              <div>
+                  <div class="d-flex justify-content-between align-items-center mt-1 mb-1">
+                    <div class="text-date">
+                      {formatDateKhmer(item.created_at)}
+                    </div>
+                    <ShareButtons title={item.title} url={url} />
+                  </div>
+                  {item.image && (
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      width="1280"
+                      height="720"
+                      loading="eager"
+                      decoding="async"
+                      class="type-image"
+                    />
+                  )}
+                  <p class="text-detail">{item.description ?? item.detail ?? ''}</p>
+              </div>
+              <div class="ads-wrapper">
+                  <Ads />
+              </div>
             </div>
-
-              {item.image && (
-               <Image
-                src={item.image}
-                alt={item.title}
-                width="1280"
-                height="720"
-                loading="eager"
-                decoding="async"
-                class="type-image"
-              />
-            )}
-            <p class="text-detail">{item.description ?? item.detail ?? ''}</p>
-            <ShareButtons title={item.title} url={url} />
           </article>
         </div>
       </div>
@@ -110,7 +119,7 @@ const head = {
       import "bootstrap/dist/js/bootstrap.bundle.min.js";
     </script>
     <style>
-      
+
       .text-title{
         color: white;
         font-size: 1.5rem;
@@ -123,7 +132,7 @@ const head = {
       .text-detail{
         padding-top: 10px;
         color: white;
-        font-size: 1.3rem;
+        font-size: 1rem;
         line-height: 1.4;
       }
       .type-image{

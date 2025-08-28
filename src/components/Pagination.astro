@@ -1,0 +1,58 @@
+---
+interface PaginationProps {
+  page: number;
+  totalPages: number;
+  limit?: number;
+  baseUrl?: string; // e.g., "/highlights"
+}
+
+const { page, totalPages, limit = 10, baseUrl = "" } = Astro.props;
+---
+<div class="pagination mt-2 flex gap-1">
+  <a
+    href={page > 1 ? `${baseUrl}?page=${page - 1}&limit=${limit}` : "#"}
+    class={`pagination-button ${page <= 1 ? "disabled cursor-not-allowed opacity-50" : ""}`}
+    aria-label="Go to previous page"
+    rel={page > 1 ? "prev" : null}
+  >
+    Previous
+  </a>
+
+  <span class="pagination-info">
+    Page {page} of {totalPages}
+  </span>
+
+  <a
+    href={page < totalPages ? `${baseUrl}?page=${page + 1}&limit=${limit}` : "#"}
+    class={`pagination-button ${page >= totalPages ? "disabled cursor-not-allowed opacity-50" : ""}`}
+    aria-label="Go to next page"
+    rel={page < totalPages ? "next" : null}
+  >
+    Next
+  </a>
+</div>
+
+<style>
+  .pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .pagination-info{
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .pagination-button {
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 999px;
+    background-image: linear-gradient(to right, #6366f1 -20%, #131323 100%);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border-color: transparent;
+  }
+</style>
